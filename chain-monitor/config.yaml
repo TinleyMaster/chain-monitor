@@ -1,0 +1,105 @@
+﻿# Chain Monitor Configuration
+# All free-tier APIs, $0/month cost
+
+api_keys:
+  alchemy:
+    eth-mainnet: "YOUR_ALCHEMY_API_KEY"
+    arbitrum: "YOUR_ALCHEMY_API_KEY"
+    optimism: "YOUR_ALCHEMY_API_KEY"
+    base: "YOUR_ALCHEMY_API_KEY"
+    polygon: "YOUR_ALCHEMY_API_KEY"
+  helius:
+    solana: "YOUR_HELIUS_API_KEY"
+  telegram:
+    bot_token: "YOUR_TELEGRAM_BOT_TOKEN"
+    chat_id: "YOUR_TELEGRAM_CHAT_ID"
+
+# ============================================================
+# Monitors config
+# ============================================================
+monitors:
+  market_trend:
+    enabled: true
+    interval_minutes: 10
+    chains:
+      - ethereum
+      - arbitrum
+      - optimism
+      - base
+      - polygon
+      - solana
+
+  whale_transfer:
+    enabled: true
+    threshold_usd: 100000
+    tracked_addresses: []
+    # evm chains enabled
+    evm_chains:
+      - ethereum
+      - arbitrum
+      - optimism
+      - base
+      - polygon
+    solana_enabled: true
+    confirmations_required: 3
+
+  price_alert:
+    enabled: true
+    interval_minutes: 3
+    tokens:
+      - symbol: "WETH"
+        chain: "ethereum"
+        cobridge_id: "coingecko:ethereum"
+        alerts:
+          - type: "percent_change"
+            threshold: 5
+            window_minutes: 5
+          - type: "above"
+            threshold_usd: 4000
+          - type: "below"
+            threshold_usd: 2000
+      - symbol: "SOL"
+        chain: "solana"
+        cobridge_id: "coingecko:solana"
+        alerts:
+          - type: "percent_change"
+            threshold: 8
+            window_minutes: 5
+
+  portfolio:
+    enabled: true
+    addresses:
+      - "0xYourWalletAddress"
+    interval_minutes: 15
+    evm_chains:
+      - ethereum
+      - arbitrum
+      - optimism
+
+  tvl_trend:
+    enabled: true
+    interval_minutes: 15
+    chains:
+      - ethereum
+      - arbitrum
+      - optimism
+      - base
+      - polygon
+      - solana
+    tvl_change_threshold_percent: 5
+
+# ============================================================
+# Data retention
+# ============================================================
+retention:
+  transfers_days: 90
+  prices_days: 365
+  portfolio_snapshots_days: 30
+  tvl_snapshots_days: 365
+  alerts_log_days: 90
+
+# ============================================================
+# DB path
+# ============================================================
+database:
+  path: "data/monitor.duckdb"
