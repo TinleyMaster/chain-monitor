@@ -18,6 +18,8 @@ from src.monitors.market_trend import MarketTrendMonitor
 from src.monitors.whale_transfer import WhaleTransferMonitor
 from src.monitors.price_alert import PriceAlertMonitor
 from src.monitors.portfolio import PortfolioMonitor
+from src.monitors.tvl_trend import TvlTrendMonitor
+from src.monitors.daily_report import DailyReportMonitor
 
 logging.basicConfig(
     level=logging.INFO,
@@ -45,6 +47,10 @@ async def run_monitor_module(module_name: str, once: bool = False):
         monitor = PriceAlertMonitor()
     elif module_name == "portfolio":
         monitor = PortfolioMonitor()
+    elif module_name == "tvl_trend":
+        monitor = TvlTrendMonitor()
+    elif module_name == "daily_report":
+        monitor = DailyReportMonitor()
     else:
         logger.error("Unknown monitor: %s", module_name)
         return
@@ -79,6 +85,10 @@ async def run_all(once: bool = False):
             monitor = PriceAlertMonitor()
         elif name == "portfolio":
             monitor = PortfolioMonitor()
+        elif name == "tvl_trend":
+            monitor = TvlTrendMonitor()
+        elif name == "daily_report":
+            monitor = DailyReportMonitor()
         else:
             logger.warning("Monitor not implemented yet: %s", name)
             continue

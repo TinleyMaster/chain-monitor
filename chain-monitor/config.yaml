@@ -103,3 +103,7 @@ retention:
 # ============================================================
 database:
   path: "data/monitor.duckdb"
+
+  daily_report:
+    enabled: true
+    report_hour: 9
