@@ -46,3 +46,20 @@ def get_explorer_url(chain: str, tx_hash: str) -> str:
 
 def is_evm(chain: str) -> bool:
     return chain in EVM_CHAINS
+
+# Public RPC WebSocket endpoints (free, no API key required)
+PUBLIC_RPC_WS = {
+    "ethereum": "wss://ethereum-rpc.publicnode.com",
+    "arbitrum": "wss://arbitrum-one-rpc.publicnode.com",
+    "optimism": "wss://optimism-rpc.publicnode.com",
+    "base": "wss://base-rpc.publicnode.com",
+    "polygon": "wss://polygon-bor-rpc.publicnode.com",
+}
+
+PUBLIC_RPC_HTTPS = {
+    "ethereum": "https://ethereum-rpc.publicnode.com",
+    "arbitrum": "https://arbitrum-one-rpc.publicnode.com",
+    "optimism": "https://optimism-rpc.publicnode.com",
+    "base": "https://base-rpc.publicnode.com",
+    "polygon": "https://polygon-bor-rpc.publicnode.com",
+}

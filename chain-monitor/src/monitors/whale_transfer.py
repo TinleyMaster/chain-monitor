@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from web3 import AsyncWeb3
 from web3.providers.persistent import PersistentConnectionProvider
 
-from src.config import get_config, get_alchemy_key
+from src.config import get_config, get_evm_ws_url
 from src.monitors.base_monitor import BaseMonitor
 from src.utils.chains import EVM_CHAINS, get_explorer_url
 from src.utils.formatters import format_whale_transfer
@@ -59,10 +59,9 @@ class WhaleTransferMonitor(BaseMonitor):
     # ---- EVM chains via Alchemy WS ----
 
     async def _listen_evm(self, chain: str):
-        from src.config import get_alchemy_ws_url
-        ws_url = get_alchemy_ws_url(chain)
-        if not ws_url or "YOUR_" in ws_url:
-            logger.warning("[%s] Skipping %s: no Alchemy key configured", self.name, chain)
+        ws_url = get_evm_ws_url(chain)
+        if not ws_url:
+            logger.warning("[%s] Skipping %s: no RPC endpoint available", self.name, chain)
             return
 
         logger.info("[%s] Connecting to %s via Alchemy WS...", self.name, chain)

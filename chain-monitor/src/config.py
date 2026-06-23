@@ -65,3 +65,18 @@ def get_alchemy_ws_url(chain: str) -> str:
     }
     sub = ws_suffix.get(chain, chain)
     return f"wss://{sub}.g.alchemy.com/v2/{key}"
+
+def get_evm_ws_url(chain: str) -> str:
+    """Get WebSocket URL for EVM chain.
+    Priority: Alchemy key -> public RPC (free, no registration)."""
+    from src.utils.chains import PUBLIC_RPC_WS
+    key = get_alchemy_key(chain)
+    if key and "YOUR_" not in key:
+        return get_alchemy_ws_url(chain)
+    url = PUBLIC_RPC_WS.get(chain)
+    if url:
+        import logging
+        logging.getLogger(__name__).info(
+            "No Alchemy key for %s, falling back to public RPC", chain
+        )
+    return url or ""
