@@ -15,6 +15,9 @@ import sys
 
 from src.config import get_config
 from src.monitors.market_trend import MarketTrendMonitor
+from src.monitors.whale_transfer import WhaleTransferMonitor
+from src.monitors.price_alert import PriceAlertMonitor
+from src.monitors.portfolio import PortfolioMonitor
 
 logging.basicConfig(
     level=logging.INFO,
@@ -36,6 +39,12 @@ async def run_monitor_module(module_name: str, once: bool = False):
 
     if module_name == "market_trend":
         monitor = MarketTrendMonitor()
+    elif module_name == "whale_transfer":
+        monitor = WhaleTransferMonitor()
+    elif module_name == "price_alert":
+        monitor = PriceAlertMonitor()
+    elif module_name == "portfolio":
+        monitor = PortfolioMonitor()
     else:
         logger.error("Unknown monitor: %s", module_name)
         return
@@ -64,6 +73,12 @@ async def run_all(once: bool = False):
 
         if name == "market_trend":
             monitor = MarketTrendMonitor()
+        elif name == "whale_transfer":
+            monitor = WhaleTransferMonitor()
+        elif name == "price_alert":
+            monitor = PriceAlertMonitor()
+        elif name == "portfolio":
+            monitor = PortfolioMonitor()
         else:
             logger.warning("Monitor not implemented yet: %s", name)
             continue
